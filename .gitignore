@@ -1,0 +1,4 @@
+/bin/
+/bridge.yaml
+*.test
+coverage.out

@@ -1,0 +1,30 @@
+# Administrator-owned configuration. Replace root before starting.
+server:
+  listen: "127.0.0.1:8765"
+  transport: "streamable-http"
+  auth_token_env: "WORKSPACE_BRIDGE_TOKEN"
+  # Alternatively, an absolute private (0600) file outside observed workspaces:
+  # auth_token_file: "/absolute/path/to/bridge-token"
+storage:
+  path: "~/.local/state/workspace-bridge"
+  retention_days: 7
+  max_bytes: 1073741824
+observer:
+  poll_interval: "60s"
+  capture_timeout: "20s"
+capture:
+  max_files: 5000
+  max_file_bytes: 1048576
+  max_total_bytes: 52428800
+  # Additive: built-in safety exclusions always apply, including tracked files.
+  exclude:
+    - "**/credentials/**"
+    - "**/*.secret"
+  # Optional positive allowlist, applied after all exclusions:
+  # allow: ["**/*.go", "go.mod", "README.md"]
+workspaces:
+  - id: "my-project"
+    name: "My Project"
+    backend: "git"
+    root: "/absolute/path/to/allowlisted/repo"
+    # poll_interval: "5s"
